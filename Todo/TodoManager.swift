@@ -14,6 +14,10 @@ class TodoManager {
     todos.append(Todo(id: id, version: version, name: name, content: content, date: date))
   }
   
+  func removeTodoAtIndex(index: Int) {
+    todos.removeAtIndex(index)
+  }
+  
   func getTodoAtIndex(index: Int) -> Todo {
     return todos[index]
   }

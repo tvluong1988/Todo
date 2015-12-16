@@ -53,7 +53,6 @@ class ViewController: UIViewController {
       
       self.todoManager.clearTodos()
 
-      //        print("json: \(json)")
       for item in json {
         if let id = item["_id"] as? String, let version = item["__v"] as? Int, let name = item["name"] as? String, let content = item["content"] as! String?, let dateString = item["date"] as? String {
           
@@ -130,7 +129,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
       
       showActivityIndicator()
       
-      Alamofire.request(.DELETE, URL.App + "/" + todoManager.getTodoAtIndex(indexPath.row).id).responseString {
+      let urlWithID = URL.App + "/" + todoManager.getTodoAtIndex(indexPath.row).id
+      
+      Alamofire.request(.DELETE, urlWithID).responseString {
         response in
         
         print("DELETE response result: \(response.result.description)")
@@ -140,6 +141,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         if response.result.description == "FAILURE" {
           self.showAlert("Failure! Could not delete from mongoDB.")
         } else {
+          
+          self.todoManager.removeTodoAtIndex(indexPath.row)
+          self.tableView.reloadData()
           self.downloadAndUpdate()
 
         }

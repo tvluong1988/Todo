@@ -20,7 +20,6 @@ class AddViewController: UIViewController {
   @IBOutlet weak var deadlineSwitch: UISwitch!
   @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
   
-  
   // MARK: Actions
   
   @IBAction func deadlineSwitch(sender: UISwitch) {

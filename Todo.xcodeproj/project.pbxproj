@@ -22,6 +22,7 @@
 		8B4996841C1F39F400BF0B97 /* TodoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4996831C1F39F400BF0B97 /* TodoUITests.swift */; };
 		8B4996921C1F3A2200BF0B97 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 8B4996911C1F3A2200BF0B97 /* README.md */; };
 		8B4996941C1F3A4400BF0B97 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8B4996931C1F3A4400BF0B97 /* Podfile */; };
+		8BD10A331C221EA4005B5C10 /* Simulation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8BD10A321C221EA4005B5C10 /* Simulation.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		8B4996851C1F39F400BF0B97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B4996911C1F3A2200BF0B97 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		8B4996931C1F3A4400BF0B97 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		8BD10A321C221EA4005B5C10 /* Simulation.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Simulation.gif; sourceTree = "<group>"; };
 		B1FD08F58711A86A00C7C211 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE67D3524180B10997B51F26 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -129,6 +131,7 @@
 			children = (
 				8B4996911C1F3A2200BF0B97 /* README.md */,
 				8B4996931C1F3A4400BF0B97 /* Podfile */,
+				8BD10A321C221EA4005B5C10 /* Simulation.gif */,
 				8B4996621C1F39F400BF0B97 /* Todo */,
 				8B4996771C1F39F400BF0B97 /* TodoTests */,
 				8B4996821C1F39F400BF0B97 /* TodoUITests */,
@@ -302,6 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B49966E1C1F39F400BF0B97 /* LaunchScreen.storyboard in Resources */,
+				8BD10A331C221EA4005B5C10 /* Simulation.gif in Resources */,
 				8B49966B1C1F39F400BF0B97 /* Assets.xcassets in Resources */,
 				8B4996941C1F3A4400BF0B97 /* Podfile in Resources */,
 				8B4996691C1F39F400BF0B97 /* Main.storyboard in Resources */,
