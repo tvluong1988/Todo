@@ -9,14 +9,21 @@
 import UIKit
 import Alamofire
 
+/**
+ *  URL Struct holding the url to the mongodb.
+ */
 struct URL {
   static let App = "https://vast-savannah-5369.herokuapp.com/todo"
 }
 
+/**
+ *  Date Struct holding the ISO date format use by mongodb.
+ */
 struct Date {
   static let Format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
 }
 
+/// Root ViewController showing the list of Todo objects from mongodb.
 class ViewController: UIViewController {
   
   // MARK: Segues
@@ -28,10 +35,12 @@ class ViewController: UIViewController {
   
   // MARK: Outlets
   @IBOutlet weak var tableView: UITableView!
-  
   @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
   
   // MARK: Functions
+  /**
+  Retrieve the Todo collection from mongodb and reload the tableview.
+  */
   func downloadAndUpdate() {
     showActivityIndicator()
     
@@ -66,6 +75,13 @@ class ViewController: UIViewController {
     
   }
   
+  /**
+   Convert a string into a NSDate.
+   
+   - parameter dateString: date of type String
+  
+   - returns: date of type NSDate
+   */
   func getDateFromString(dateString: String) -> NSDate? {
     if dateString == "nil" {
       return nil
@@ -73,7 +89,6 @@ class ViewController: UIViewController {
       return dateFormatter.dateFromString(dateString)
     }
   }
-
 
   // MARK: Lifecycle
   override func viewDidLoad() {
@@ -95,13 +110,12 @@ class ViewController: UIViewController {
   }
   
   // MARK: Properties
+  /// TodoManager managing all the todo objects.
   var todoManager: TodoManager!
   var dateFormatter: NSDateFormatter!
-//  var activityIndicator: UIActivityIndicatorView?
-
-
 }
 
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
     return 1
@@ -121,8 +135,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     return cell
     
   }
-  
-  
   
   func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
     if editingStyle == .Delete {
@@ -152,7 +164,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
   }
 }
 
-// MARK: Helpers
+// MARK: - Helpers
 extension ViewController {
   /**
    Add and show an activity indicator onscreen.
@@ -173,8 +185,7 @@ extension ViewController {
   /**
    Create and show AlertView
    
-   - Parameter message: Message to display to user.
-   
+   - parameter message: Message to display to user.
    */
   func showAlert(message: String) {
     let alert = UIAlertController(title: nil, message: message, preferredStyle: .Alert)

@@ -8,8 +8,10 @@
 
 import UIKit
 
+/// Custom table view cell to hold a Todo object.
 class CustomCell: UITableViewCell {
 
   // MARK: Properties
+ /// Todo object
   var todo: Todo?
 }

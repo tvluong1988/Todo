@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// DetailViewController shows the Todo object.
 class DetailViewController: UIViewController {
   
   // MARK: Segues
@@ -28,8 +29,10 @@ class DetailViewController: UIViewController {
   
   @IBOutlet var timeLeftLabels: [UILabel]!
   
-  
   // MARK: Functions
+  /**
+  Update the days, hours, minutes, and seconds label with the time left until the deadline of the Todo object.
+  */
   func updateTimeLeft() {
     
     guard var timeLeft = todo.date?.timeIntervalSinceNow else {
@@ -48,8 +51,6 @@ class DetailViewController: UIViewController {
     }
     
     timeLeft = floor(timeLeft)
-    
-//    print("seconds left: \(timeLeft)")
     
     let days = Int(floor(timeLeft / (24*60*60)))
     daysLabel.text = days.description
@@ -72,6 +73,7 @@ class DetailViewController: UIViewController {
     textView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.1)
     
   }
+  
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
     
@@ -101,6 +103,8 @@ class DetailViewController: UIViewController {
   }
   
   // MARK: Properties
+ /// Todo object to display.
   var todo: Todo!
+ /// Timer that updates the time labels every second.
   var timer: NSTimer?
 }

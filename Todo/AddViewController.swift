@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 
+/// AddViewController shows the form to add or modify a Todo object.
 class AddViewController: UIViewController {
   
   // MARK: Outlets
@@ -99,6 +100,9 @@ class AddViewController: UIViewController {
   }
   
   // MARK: Functions
+  /**
+  Set the default value and state of the forms.
+  */
   func resetForm() {
     nameTextField.text = nil
     contentTextView.text = ""
@@ -112,6 +116,11 @@ class AddViewController: UIViewController {
     
   }
   
+  /**
+   Convert the NSDate from datePicker to a string.
+   
+   - returns: the date as a string value
+   */
   func getStringFromDatePicker() -> String {
     
     guard deadlineSwitch.on else {
@@ -176,10 +185,13 @@ class AddViewController: UIViewController {
   }
   
   // MARK: Properties
+  /// The Todo object to modify.
   var todo: Todo?
+  /// Set the AddViewController in Add or Modify mode.
   var editMode = false
 }
 
+// MARK: - UITextFieldDelegate
 extension AddViewController: UITextFieldDelegate {
   func textFieldShouldReturn(textField: UITextField) -> Bool {
     nameTextField.resignFirstResponder()
@@ -196,7 +208,7 @@ extension AddViewController: UITextFieldDelegate {
   }
 }
 
-// MARK: Helpers
+// MARK: - Helpers
 extension AddViewController {
   /**
    Add and show an activity indicator onscreen.
@@ -217,8 +229,7 @@ extension AddViewController {
   /**
    Create and show AlertView
    
-   - Parameter message: Message to display to user.
-   
+   - parameter message: Message to display to user.
    */
   func showAlert(message: String) {
     let alert = UIAlertController(title: nil, message: message, preferredStyle: .Alert)
