@@ -9,6 +9,12 @@
 import UIKit
 import Alamofire
 
+/**
+ Configure the mode of the AddViewController.
+ 
+ - Add:  Add a new Todo object
+ - Edit: Edit an existing Todo object
+ */
 enum AddViewControllerMode: String {
   case Add
   case Edit
@@ -85,6 +91,8 @@ class AddViewController: UIViewController {
     
     
     
+    
+    
   }
   
   @IBAction func doneButtonPressed(sender: UIBarButtonItem) {
@@ -141,7 +149,6 @@ class AddViewController: UIViewController {
     
     addButton.enabled = false
     doneButton.enabled = false
-    
     datePicker.hidden = true
     
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "textViewDidBeginEditing", name: UITextViewTextDidBeginEditingNotification, object: nil)

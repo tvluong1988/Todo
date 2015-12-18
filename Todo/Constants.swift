@@ -14,11 +14,17 @@ import Foundation
 struct MongoDB {
   static let url = "https://vast-savannah-5369.herokuapp.com/todo"
   
+  /**
+   *  Result of Request.
+   */
   struct Request {
     static let success = "SUCCESS"
     static let failure = "FAILURE"
   }
   
+  /**
+   *  Todo object schema for mongodb.
+   */
   struct TodoSchema {
     static let headers    = ["Content-Type": "application/json"]
     static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
@@ -31,6 +37,9 @@ struct MongoDB {
   }
 }
 
+/**
+ *  Segue Identifiers
+ */
 struct SegueIdentifier {
   static let ShowAddViewController    = "ShowAddViewController"
   static let ShowDetailViewController = "ShowDetailViewController"

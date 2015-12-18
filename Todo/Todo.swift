@@ -23,23 +23,23 @@ class Todo {
   - returns: Todo object
   */
   init(id: String, version: Int, name: String, content: String?, date: NSDate?) {
-    self.id = id
+    self.id      = id
     self.version = version
-    self.name = name
+    self.name    = name
     self.content = content
-    self.date = date
+    self.date    = date
   }
   
   // MARK: Properties
- /// primary key id from mongodb
+  /// primary key id from mongodb
   let id: String
- /// version number from mongodb
+  /// version number from mongodb
   var version: Int
- /// name of Todo
+  /// name of Todo
   var name: String
- /// detail description of Todo
+  /// detail description of Todo
   var content: String?
- /// deadline of Todo
+  /// deadline of Todo
   var date: NSDate?
   
 }
