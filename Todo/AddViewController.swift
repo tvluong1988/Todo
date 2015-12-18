@@ -9,6 +9,11 @@
 import UIKit
 import Alamofire
 
+enum AddViewControllerMode: String {
+  case Add
+  case Edit
+}
+
 /// AddViewController shows the form to add or modify a Todo object.
 class AddViewController: UIViewController {
   
@@ -33,57 +38,52 @@ class AddViewController: UIViewController {
       return
     }
     
-    showActivityIndicator()
-    
-    let headers = ["Content-Type": "application/json"]
+    showActivityIndicator(activityIndicator)
     
     var parameters = [String: AnyObject]()
-    parameters["name"] = nameTextField.text!
-    parameters["content"] = contentTextView.text
-    parameters["date"] = getStringFromDatePicker()
+    parameters[MongoDB.TodoSchema.name] = nameTextField.text!
+    parameters[MongoDB.TodoSchema.content] = contentTextView.text
+    parameters[MongoDB.TodoSchema.date] = getStringFromDatePicker()
     
-    switch navigationItem.title! {
-    case "Add Todo":
-      Alamofire.request(.POST, URL.App, parameters: parameters, encoding: ParameterEncoding.JSON, headers: headers).responseString {
+    switch mode {
+    case .Add:
+      Alamofire.request(.POST, MongoDB.url, parameters: parameters, encoding: ParameterEncoding.JSON, headers: MongoDB.TodoSchema.headers).responseString {
         response in
         
         print("POST response result: \(response.result)")
         
-        self.hideActivityIndicator()
+        hideActivityIndicator(self.activityIndicator)
         
-        if response.result.description == "SUCCESS" {
+        if response.result.description == MongoDB.Request.success {
           self.resetForm()
-          self.showAlert("Success! Added to mongoDB.")
+          showAlert("Success! Added to mongoDB.", target: self)
         } else {
-          self.showAlert("Failure! Could not add to mongoDB.")
+          showAlert("Failure! Could not add to mongoDB.", target: self)
         }
         
       }
       
-    case "Modify Todo":
-      let urlWithID = URL.App + "/\(todo!.id)"
-      parameters["__v"] = todo!.version
+    case .Edit:
+      let urlWithID = MongoDB.url + "/\(todo!.id)"
+      parameters[MongoDB.TodoSchema.version] = todo!.version
       
-      Alamofire.request(.PUT, urlWithID, parameters: parameters, encoding: ParameterEncoding.JSON, headers: headers).responseString {
+      Alamofire.request(.PUT, urlWithID, parameters: parameters, encoding: ParameterEncoding.JSON, headers: MongoDB.TodoSchema.headers).responseString {
         response in
         
         print("PUT response result: \(response.result)")
         
-        self.hideActivityIndicator()
+        hideActivityIndicator(self.activityIndicator)
         
-        if response.result.description == "SUCCESS" {
+        if response.result.description == MongoDB.Request.success {
           self.navigationController?.popToRootViewControllerAnimated(true)
         } else {
-          self.showAlert("Failure! Could not update to mongoDB.")
+          showAlert("Failure! Could not update to mongoDB.", target: self)
         }
         
-      }
-      
-    default: break
-      
+      }      
     }
     
-
+    
     
   }
   
@@ -124,11 +124,11 @@ class AddViewController: UIViewController {
   func getStringFromDatePicker() -> String {
     
     guard deadlineSwitch.on else {
-      return "nil"
+      return MongoDB.TodoSchema.dateNil
     }
     
     let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = Date.Format
+    dateFormatter.dateFormat = MongoDB.TodoSchema.dateFormat
     return dateFormatter.stringFromDate(datePicker.date)
   }
   
@@ -155,12 +155,13 @@ class AddViewController: UIViewController {
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
     
-    if editMode {
-      addButton.setTitle("Modify", forState: .Normal)
-      navigationItem.title = "Modify Todo"
-    } else {
+    switch mode {
+    case .Add:
       addButton.setTitle("Add", forState: .Normal)
       navigationItem.title = "Add Todo"
+    case .Edit:
+      addButton.setTitle("Modify", forState: .Normal)
+      navigationItem.title = "Modify Todo"
     }
     
     if let todo = todo {
@@ -181,14 +182,14 @@ class AddViewController: UIViewController {
   
   override func viewDidDisappear(animated: Bool) {
     todo = nil
-    editMode = false
+    mode = .Add
   }
   
   // MARK: Properties
   /// The Todo object to modify.
   var todo: Todo?
-  /// Set the AddViewController in Add or Modify mode.
-  var editMode = false
+  /// Set the AddViewController in Add or Edit mode.
+  var mode: AddViewControllerMode = .Add
 }
 
 // MARK: - UITextFieldDelegate
@@ -208,37 +209,6 @@ extension AddViewController: UITextFieldDelegate {
   }
 }
 
-// MARK: - Helpers
-extension AddViewController {
-  /**
-   Add and show an activity indicator onscreen.
-   */
-  func showActivityIndicator() {
-    activityIndicator.hidden = false
-    activityIndicator.startAnimating()
-  }
-  
-  /**
-   Hide and remove an activity indicator.
-   */
-  func hideActivityIndicator() {
-    activityIndicator.stopAnimating()
-    activityIndicator.hidden = true
-  }
-  
-  /**
-   Create and show AlertView
-   
-   - parameter message: Message to display to user.
-   */
-  func showAlert(message: String) {
-    let alert = UIAlertController(title: nil, message: message, preferredStyle: .Alert)
-    let okButton = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-    alert.addAction(okButton)
-    
-    presentViewController(alert, animated: true, completion: nil)
-  }
-}
 
 
 

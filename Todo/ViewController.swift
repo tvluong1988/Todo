@@ -9,26 +9,12 @@
 import UIKit
 import Alamofire
 
-/**
- *  URL Struct holding the url to the mongodb.
- */
-struct URL {
-  static let App = "https://vast-savannah-5369.herokuapp.com/todo"
-}
-
-/**
- *  Date Struct holding the ISO date format use by mongodb.
- */
-struct Date {
-  static let Format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-}
-
 /// Root ViewController showing the list of Todo objects from mongodb.
 class ViewController: UIViewController {
   
   // MARK: Segues
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if segue.identifier == "ShowDetailViewController", let cell = sender as? CustomCell, let detailVC = segue.destinationViewController as? DetailViewController {
+    if segue.identifier == SegueIdentifier.ShowDetailViewController, let cell = sender as? CustomCell, let detailVC = segue.destinationViewController as? DetailViewController {
       detailVC.todo = cell.todo
     }
   }
@@ -42,18 +28,18 @@ class ViewController: UIViewController {
   Retrieve the Todo collection from mongodb and reload the tableview.
   */
   func downloadAndUpdate() {
-    showActivityIndicator()
+    showActivityIndicator(activityIndicator)
     
-    Alamofire.request(.GET, URL.App).responseJSON {
+    Alamofire.request(.GET, MongoDB.url).responseJSON {
       response in
       
       print("GET request result: \(response.result.description)")    // result of response serialization
       
-      self.hideActivityIndicator()
+      hideActivityIndicator(self.activityIndicator)
       self.activityIndicator.stopAnimating()
       
-      if response.result.description == "FAILURE" {
-        self.showAlert("Failure! Could not connect to mongoDB.")
+      if response.result.description == MongoDB.Request.failure {
+        showAlert("Failure! Could not connect to mongoDB.", target: self)
       }
       
       guard let json = response.result.value as? NSMutableArray else {
@@ -61,9 +47,9 @@ class ViewController: UIViewController {
       }
       
       self.todoManager.clearTodos()
-
+      
       for item in json {
-        if let id = item["_id"] as? String, let version = item["__v"] as? Int, let name = item["name"] as? String, let content = item["content"] as! String?, let dateString = item["date"] as? String {
+        if let id = item[MongoDB.TodoSchema.id] as? String, let version = item[MongoDB.TodoSchema.version] as? Int, let name = item[MongoDB.TodoSchema.name] as? String, let content = item[MongoDB.TodoSchema.content] as! String?, let dateString = item[MongoDB.TodoSchema.date] as? String {
           
           let date = self.getDateFromString(dateString)
           
@@ -79,17 +65,17 @@ class ViewController: UIViewController {
    Convert a string into a NSDate.
    
    - parameter dateString: date of type String
-  
+   
    - returns: date of type NSDate
    */
   func getDateFromString(dateString: String) -> NSDate? {
-    if dateString == "nil" {
+    if dateString == MongoDB.TodoSchema.dateNil {
       return nil
     } else {
       return dateFormatter.dateFromString(dateString)
     }
   }
-
+  
   // MARK: Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -97,7 +83,7 @@ class ViewController: UIViewController {
     todoManager = TodoManager()
     
     dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = Date.Format
+    dateFormatter.dateFormat = MongoDB.TodoSchema.dateFormat
     
     activityIndicator.color = UIColor.darkGrayColor()
     activityIndicator.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0)
@@ -139,62 +125,31 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
     if editingStyle == .Delete {
       
-      showActivityIndicator()
+      showActivityIndicator(activityIndicator)
       
-      let urlWithID = URL.App + "/" + todoManager.getTodoAtIndex(indexPath.row).id
+      let urlWithID = MongoDB.url + "/" + todoManager.getTodoAtIndex(indexPath.row).id
       
       Alamofire.request(.DELETE, urlWithID).responseString {
         response in
         
         print("DELETE response result: \(response.result.description)")
         
-        self.hideActivityIndicator()
+        hideActivityIndicator(self.activityIndicator)
         
-        if response.result.description == "FAILURE" {
-          self.showAlert("Failure! Could not delete from mongoDB.")
+        if response.result.description == MongoDB.Request.failure {
+          showAlert("Failure! Could not delete from mongoDB.", target: self)
         } else {
           
           self.todoManager.removeTodoAtIndex(indexPath.row)
           self.tableView.reloadData()
           self.downloadAndUpdate()
-
+          
         }
       }
     }
   }
 }
 
-// MARK: - Helpers
-extension ViewController {
-  /**
-   Add and show an activity indicator onscreen.
-   */
-  func showActivityIndicator() {
-    activityIndicator.hidden = false
-    activityIndicator.startAnimating()
-  }
-  
-  /**
-   Hide and remove an activity indicator.
-   */
-  func hideActivityIndicator() {
-    activityIndicator.stopAnimating()
-    activityIndicator.hidden = true
-  }
-  
-  /**
-   Create and show AlertView
-   
-   - parameter message: Message to display to user.
-   */
-  func showAlert(message: String) {
-    let alert = UIAlertController(title: nil, message: message, preferredStyle: .Alert)
-    let okButton = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-    alert.addAction(okButton)
-    
-    presentViewController(alert, animated: true, completion: nil)
-  }
-}
 
 
 

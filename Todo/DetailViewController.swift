@@ -13,9 +13,9 @@ class DetailViewController: UIViewController {
   
   // MARK: Segues
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if segue.identifier == "ShowEditViewController", let modifyVC = segue.destinationViewController as? AddViewController {
+    if segue.identifier == SegueIdentifier.ShowEditViewController, let modifyVC = segue.destinationViewController as? AddViewController {
       modifyVC.todo = todo
-      modifyVC.editMode = true
+      modifyVC.mode = .Edit
     }
   }
   
@@ -103,8 +103,8 @@ class DetailViewController: UIViewController {
   }
   
   // MARK: Properties
- /// Todo object to display.
+  /// Todo object to display.
   var todo: Todo!
- /// Timer that updates the time labels every second.
+  /// Timer that updates the time labels every second.
   var timer: NSTimer?
 }

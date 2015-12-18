@@ -22,6 +22,8 @@
 		8B4996841C1F39F400BF0B97 /* TodoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4996831C1F39F400BF0B97 /* TodoUITests.swift */; };
 		8B4996921C1F3A2200BF0B97 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 8B4996911C1F3A2200BF0B97 /* README.md */; };
 		8B4996941C1F3A4400BF0B97 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8B4996931C1F3A4400BF0B97 /* Podfile */; };
+		8B8BDD571C24601C00314FF8 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8BDD561C24601C00314FF8 /* Helpers.swift */; };
+		8BB820F71C2458ED000BDAC1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB820F61C2458ED000BDAC1 /* Constants.swift */; };
 		8BD10A331C221EA4005B5C10 /* Simulation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8BD10A321C221EA4005B5C10 /* Simulation.gif */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +66,8 @@
 		8B4996851C1F39F400BF0B97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B4996911C1F3A2200BF0B97 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		8B4996931C1F3A4400BF0B97 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		8B8BDD561C24601C00314FF8 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		8BB820F61C2458ED000BDAC1 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8BD10A321C221EA4005B5C10 /* Simulation.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Simulation.gif; sourceTree = "<group>"; };
 		B1FD08F58711A86A00C7C211 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE67D3524180B10997B51F26 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -157,6 +161,8 @@
 				8B1556381C1F3BBE00344891 /* Support */,
 				8B008AAB1C20D12900BEF78E /* Controller */,
 				8B008AAC1C20D13500BEF78E /* Model */,
+				8BB820F61C2458ED000BDAC1 /* Constants.swift */,
+				8B8BDD561C24601C00314FF8 /* Helpers.swift */,
 				8B4996671C1F39F400BF0B97 /* Main.storyboard */,
 			);
 			path = Todo;
@@ -384,11 +390,13 @@
 				8B008AA41C20B24D00BEF78E /* Todo.swift in Sources */,
 				8B008AA61C20B37800BEF78E /* TodoManager.swift in Sources */,
 				8B4996921C1F3A2200BF0B97 /* README.md in Sources */,
+				8B8BDD571C24601C00314FF8 /* Helpers.swift in Sources */,
 				8B4996661C1F39F400BF0B97 /* ViewController.swift in Sources */,
 				8B15563A1C1F496F00344891 /* AddViewController.swift in Sources */,
 				8B4996641C1F39F400BF0B97 /* AppDelegate.swift in Sources */,
 				8B008AAA1C20C71E00BEF78E /* CustomCell.swift in Sources */,
 				8B008AA81C20C2C400BEF78E /* DetailViewController.swift in Sources */,
+				8BB820F71C2458ED000BDAC1 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
