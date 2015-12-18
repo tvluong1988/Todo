@@ -51,7 +51,7 @@ class ViewController: UIViewController {
       for item in json {
         if let id = item[MongoDB.TodoSchema.id] as? String, let version = item[MongoDB.TodoSchema.version] as? Int, let name = item[MongoDB.TodoSchema.name] as? String, let content = item[MongoDB.TodoSchema.content] as! String?, let dateString = item[MongoDB.TodoSchema.date] as? String {
           
-          let date = self.getDateFromString(dateString)
+          let date = self.convertStringToDate(dateString)
           
           self.todoManager.addTodo(id, version: version, name: name, content: content, date: date)
         }
@@ -68,10 +68,13 @@ class ViewController: UIViewController {
    
    - returns: date of type NSDate
    */
-  func getDateFromString(dateString: String) -> NSDate? {
+  func convertStringToDate(dateString: String) -> NSDate? {
     if dateString == MongoDB.TodoSchema.dateNil {
       return nil
     } else {
+      
+      let dateFormatter = NSDateFormatter()
+      dateFormatter.dateFormat = MongoDB.TodoSchema.dateFormat
       return dateFormatter.dateFromString(dateString)
     }
   }
@@ -82,8 +85,7 @@ class ViewController: UIViewController {
     
     todoManager = TodoManager()
     
-    dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = MongoDB.TodoSchema.dateFormat
+    
     
     activityIndicator.color = UIColor.darkGrayColor()
     activityIndicator.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0)
@@ -98,7 +100,6 @@ class ViewController: UIViewController {
   // MARK: Properties
   /// TodoManager managing all the todo objects.
   var todoManager: TodoManager!
-  var dateFormatter: NSDateFormatter!
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate

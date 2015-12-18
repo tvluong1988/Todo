@@ -8,7 +8,7 @@
 import Foundation
 
 /// Todo object.
-class Todo {
+struct Todo {
   
   // MARK: Lifecycle
   /**
@@ -43,3 +43,18 @@ class Todo {
   var date: NSDate?
   
 }
+
+extension Todo: Equatable {}
+func ==(lhs: Todo, rhs: Todo) -> Bool {
+  return lhs.id == rhs.id
+}
+
+
+
+
+
+
+
+
+
+

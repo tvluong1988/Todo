@@ -49,7 +49,7 @@ class AddViewController: UIViewController {
     var parameters = [String: AnyObject]()
     parameters[MongoDB.TodoSchema.name] = nameTextField.text!
     parameters[MongoDB.TodoSchema.content] = contentTextView.text
-    parameters[MongoDB.TodoSchema.date] = getStringFromDatePicker()
+    parameters[MongoDB.TodoSchema.date] = self.convertDateToString(datePicker.date)
     
     switch mode {
     case .Add:
@@ -125,11 +125,13 @@ class AddViewController: UIViewController {
   }
   
   /**
-   Convert the NSDate from datePicker to a string.
+   Convert date into string type.
    
-   - returns: the date as a string value
+   - parameter date: date as type NSDate
+   
+   - returns: date as type String
    */
-  func getStringFromDatePicker() -> String {
+  func convertDateToString(date: NSDate) -> String {
     
     guard deadlineSwitch.on else {
       return MongoDB.TodoSchema.dateNil
@@ -137,7 +139,7 @@ class AddViewController: UIViewController {
     
     let dateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = MongoDB.TodoSchema.dateFormat
-    return dateFormatter.stringFromDate(datePicker.date)
+    return dateFormatter.stringFromDate(date)
   }
   
   // MARK: Lifecycle

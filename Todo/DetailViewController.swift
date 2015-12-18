@@ -35,7 +35,7 @@ class DetailViewController: UIViewController {
   */
   func updateTimeLeft() {
     
-    guard var timeLeft = todo.date?.timeIntervalSinceNow else {
+    guard let timeLeft = todo.date?.timeIntervalSinceNow else {
       return
     }
     
@@ -50,21 +50,36 @@ class DetailViewController: UIViewController {
       return
     }
     
-    timeLeft = floor(timeLeft)
+    let time = calculateTimeLeft(timeLeft)
     
-    let days = Int(floor(timeLeft / (24*60*60)))
-    daysLabel.text = days.description
+    daysLabel.text = time.daysLeft.description
+    hoursLabel.text = time.hoursLeft.description
+    minutesLabel.text = time.minutesLeft.description
+    secondsLabel.text = time.secondsLeft.description
+  }
+  
+  /**
+   Calculate the days, hours, minutes, and seconds remain from the time specified in seconds.
+   
+   - parameter time: time in seconds
+   
+   - returns: tuple containing the days, hours, minutes, and seconds equivalent of the specified time in seconds
+   */
+  func calculateTimeLeft(time: NSTimeInterval) -> (daysLeft: Int, hoursLeft: Int, minutesLeft: Int, secondsLeft: Int) {
+    
+    var timeLeft = floor(time)
+    
+    let daysLeft = Int(floor(timeLeft / (24*60*60)))
     
     timeLeft = timeLeft % (24*60*60)
-    let hours = Int(floor(timeLeft / (60*60)))
-    hoursLabel.text = hours.description
+    let hoursLeft = Int(floor(timeLeft / (60*60)))
     
     timeLeft = timeLeft % (60*60)
-    let minutes = Int(floor(timeLeft / (60)))
-    minutesLabel.text = minutes.description
+    let minutesLeft = Int(floor(timeLeft / 60))
     
-    timeLeft = timeLeft % 60
-    secondsLabel.text = Int(floor(timeLeft)).description
+    let secondsLeft = Int(floor(timeLeft % 60))
+    
+    return (daysLeft, hoursLeft, minutesLeft, secondsLeft)
   }
   
   // MARK: Lifecycle
