@@ -169,8 +169,8 @@ class AddViewController: UIViewController {
       addButton.setTitle("Add", forState: .Normal)
       navigationItem.title = "Add Todo"
     case .Edit:
-      addButton.setTitle("Modify", forState: .Normal)
-      navigationItem.title = "Modify Todo"
+      addButton.setTitle("Edit", forState: .Normal)
+      navigationItem.title = "Edit Todo"
     }
     
     if let todo = todo {
@@ -201,6 +201,20 @@ class AddViewController: UIViewController {
   var mode: AddViewControllerMode = .Add
 }
 
+extension AddViewController: UIPickerViewAccessibilityDelegate {
+  func pickerView(pickerView: UIPickerView, accessibilityLabelForComponent component: Int) -> String? {
+    switch component {
+    case 0:
+      return "PickerDate"
+    case 1:
+      return "PickerHour"
+    case 2:
+      return "PickerMinute"
+    default: return nil
+    }
+  }
+}
+
 // MARK: - UITextFieldDelegate
 extension AddViewController: UITextFieldDelegate {
   func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -217,6 +231,19 @@ extension AddViewController: UITextFieldDelegate {
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
